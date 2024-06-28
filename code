@@ -1,0 +1,159 @@
+Python part
+Pmodoro.py
+
+TO push notifications
+
+import time
+import winsound
+from plyer import notification   
+# define the countdown func.
+def countdown(t):
+    
+    while t:
+        mins, secs = divmod(t, 60)
+        timer = '{:02d}:{:02d}'.format(mins, secs)
+        print(timer, end="\r")//display clock with css
+        time.sleep(1)
+        t -= 1  
+    print('Fire in the hole!!')  
+# input time in seconds
+t = input("Enter the time in seconds: ")  
+# function call
+countdown(int(t))
+def notification():
+    notification_title = 'GREETINGS FROM JAVATPOINT!'  
+    notification_message = 'Thank you for reading. Have a Good Day.'  
+    freq = 300
+    dur = 500 
+    # loop iterates 5 times i.e, 5 beeps will be produced.
+    for i in range(0, 5):   
+        winsound.Beep(freq, dur)   //famous character voice alarm
+    notification.notify(  
+        title = notification_title,  
+        message = notification_message,  
+        app_icon = None,  
+        timeout = 20,  
+        toast = False  
+        )
+
+Giving structure to the notification 
+
+# Import module
+from tkinter import *
+ 
+# Create object
+splash_root = Tk()
+ 
+# Adjust size
+splash_root.geometry("200x200")
+ 
+# Set Label
+splash_label = Label(splash_root, text="Splash Screen", font=18)
+splash_label.pack()
+ 
+# main window function
+ 
+ 
+def main():
+    # Create object
+    root = Tk()
+ 
+    # Adjust size
+    root.geometry("400x400")
+ 
+ 
+# Call main function
+main()
+ 
+# Execute tkinter
+mainloop()
+
+HTML part - Code for getting input 
+
+<html>
+    <head>
+        <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+   <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+   <title>
+    POMOFOMO
+</title>  
+    <style>
+        body{
+            background-image:url("https://metro.co.uk/wp-content/uploads/2021/11/The-Pomodoro-Technique-feature-d05e.gif");
+            background-repeat: no-repeat;
+              background-attachment: fixed;  
+              background-size: cover;
+              }
+              input[type=text], select {
+  width: 50%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+input[type=submit] {
+  width: 50%;
+  background-color: #45a098;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.change {
+      display: none;
+    }       
+input[type=submit]:hover + .change {
+      display: block;
+      color: rgb(58, 72, 156);
+      font-size: 20px;
+}
+
+input[type=submit]:hover {
+  background-color: #197971;
+}
+
+div {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 70px;
+}
+    </style>
+    </head>
+    <body>
+        <center>
+            <h1 style="font-size:7vw;color:#4B0150;"><b>POMOFOMO</b></h1>
+        </center>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <center>
+        <h1 style="font-size:5vw;">ABOUT US</h1>
+        <p style="color:#FFFFFF;"><b>Our pomofomo application let's you follow the most preferred and prescrible timing scheduler pomodoro technique.<br>Here this sutomated appliaction will keep your time on check and will let you have a stressless atudy time.</b></p><br><br><br>
+        <h1 style="font-size:5vw;">POMODORO TECHNIQUE</h1>
+        <p style="color:#FFFFFF;"><b>The Pomodoro Technique is a time management method developed by Francesco Cirillo in the late 1980s. It uses a kitchen timer to break work into intervals, typically 25 minutes in length, separated by short breaks. Each interval is known as a pomodoro, from the Italian word for tomato, after the tomato-shaped kitchen timer Cirillo used as a university student</p></b><br><br><br>
+        <h1 style="font-size:5vw;">SIX STEPS</h1>
+        <p style="color:#FFFFFF;"><b># Decide on the task to be done.<br>
+            # Set the Pomodoro timer (typically for 30 minutes).<br>
+            # Work on the task.<br>
+            # End work when the timer rings and take a short break (typically 5–10 minutes).<br>
+            #Thoroughly complete three pomodoros<br>
+            # After three pomodoros are done, take the fourth pomodoro and then take a long breaks.<br># Once the long break is finished, return to step.<br></p></b>
+            <br>
+<br><br>
+<br><br><br>
+  <form action="/action_page.php">
+    <label for="timer" style="font-size: 3vw;">how long are you planning to study?</label><br>
+    <input type="text" id="timer" name="timer" placeholder="enter the numeric value..">
+    <input type="submit" value="Submit">
+    <div class="change">Have a note that you have break for 6 minutes for every 30 minutes <br> 
+        A long after every 3 rounds </div>
+  </form></center>
+  <iframe>pomodoro.py</iframe>
+    </body>
+</html>
