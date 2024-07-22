@@ -1,159 +1,111 @@
-Python part
-Pmodoro.py
 
-TO push notifications
+app.py
 
+from flask import Flask, render_template, request, jsonify
 import time
-import winsound
-from plyer import notification   
-# define the countdown func.
-def countdown(t):
-    
-    while t:
-        mins, secs = divmod(t, 60)
-        timer = '{:02d}:{:02d}'.format(mins, secs)
-        print(timer, end="\r")//display clock with css
+import threading
+
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/start_timer', methods=['POST'])
+def start_timer():
+    data = request.get_json()
+    minutes = int(data['minutes'])
+    seconds = minutes * 60
+    timer_thread = threading.Thread(target=timer, args=(seconds,))
+    timer_thread.start()
+    return jsonify({'message': 'Timer started'})
+
+def timer(seconds):
+    while seconds:
         time.sleep(1)
-        t -= 1  
-    print('Fire in the hole!!')  
-# input time in seconds
-t = input("Enter the time in seconds: ")  
-# function call
-countdown(int(t))
-def notification():
-    notification_title = 'GREETINGS FROM JAVATPOINT!'  
-    notification_message = 'Thank you for reading. Have a Good Day.'  
-    freq = 300
-    dur = 500 
-    # loop iterates 5 times i.e, 5 beeps will be produced.
-    for i in range(0, 5):   
-        winsound.Beep(freq, dur)   //famous character voice alarm
-    notification.notify(  
-        title = notification_title,  
-        message = notification_message,  
-        app_icon = None,  
-        timeout = 20,  
-        toast = False  
-        )
+        seconds -= 1
+    print("Time's up!")  # This will be replaced by a notification or other action
 
-Giving structure to the notification 
+if __name__ == '__main__':
+    app.run(debug=True)
 
-# Import module
-from tkinter import *
- 
-# Create object
-splash_root = Tk()
- 
-# Adjust size
-splash_root.geometry("200x200")
- 
-# Set Label
-splash_label = Label(splash_root, text="Splash Screen", font=18)
-splash_label.pack()
- 
-# main window function
- 
- 
-def main():
-    # Create object
-    root = Tk()
- 
-    # Adjust size
-    root.geometry("400x400")
- 
- 
-# Call main function
-main()
- 
-# Execute tkinter
-mainloop()
+index.html
 
-HTML part - Code for getting input 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomodoro Timer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <center>
+        <h1>Pomodoro Timer</h1>
+        <div>
+            <input type="text" id="timeInput" placeholder="Enter time in minutes">
+            <button onclick="startPomodoro()">Start Timer</button>
+        </div>
+        <div id="countdown">00:00</div>
+    </center>
 
-<html>
-    <head>
-        <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
-   <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
-   <title>
-    POMOFOMO
-</title>  
-    <style>
-        body{
-            background-image:url("https://metro.co.uk/wp-content/uploads/2021/11/The-Pomodoro-Technique-feature-d05e.gif");
-            background-repeat: no-repeat;
-              background-attachment: fixed;  
-              background-size: cover;
-              }
-              input[type=text], select {
-  width: 50%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-input[type=submit] {
-  width: 50%;
-  background-color: #45a098;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-.change {
-      display: none;
-    }       
-input[type=submit]:hover + .change {
-      display: block;
-      color: rgb(58, 72, 156);
-      font-size: 20px;
-}
-
-input[type=submit]:hover {
-  background-color: #197971;
-}
-
-div {
-  border-radius: 5px;
-  background-color: #f2f2f2;
-  padding: 70px;
-}
-    </style>
-    </head>
-    <body>
-        <center>
-            <h1 style="font-size:7vw;color:#4B0150;"><b>POMOFOMO</b></h1>
-        </center>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <center>
-        <h1 style="font-size:5vw;">ABOUT US</h1>
-        <p style="color:#FFFFFF;"><b>Our pomofomo application let's you follow the most preferred and prescrible timing scheduler pomodoro technique.<br>Here this sutomated appliaction will keep your time on check and will let you have a stressless atudy time.</b></p><br><br><br>
-        <h1 style="font-size:5vw;">POMODORO TECHNIQUE</h1>
-        <p style="color:#FFFFFF;"><b>The Pomodoro Technique is a time management method developed by Francesco Cirillo in the late 1980s. It uses a kitchen timer to break work into intervals, typically 25 minutes in length, separated by short breaks. Each interval is known as a pomodoro, from the Italian word for tomato, after the tomato-shaped kitchen timer Cirillo used as a university student</p></b><br><br><br>
-        <h1 style="font-size:5vw;">SIX STEPS</h1>
-        <p style="color:#FFFFFF;"><b># Decide on the task to be done.<br>
-            # Set the Pomodoro timer (typically for 30 minutes).<br>
-            # Work on the task.<br>
-            # End work when the timer rings and take a short break (typically 5–10 minutes).<br>
-            #Thoroughly complete three pomodoros<br>
-            # After three pomodoros are done, take the fourth pomodoro and then take a long breaks.<br># Once the long break is finished, return to step.<br></p></b>
-            <br>
-<br><br>
-<br><br><br>
-  <form action="/action_page.php">
-    <label for="timer" style="font-size: 3vw;">how long are you planning to study?</label><br>
-    <input type="text" id="timer" name="timer" placeholder="enter the numeric value..">
-    <input type="submit" value="Submit">
-    <div class="change">Have a note that you have break for 6 minutes for every 30 minutes <br> 
-        A long after every 3 rounds </div>
-  </form></center>
-  <iframe>pomodoro.py</iframe>
-    </body>
+    <script>
+        function startPomodoro() {
+            let timeInput = document.getElementById('timeInput').value;
+            fetch('/start_timer', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ minutes: timeInput })
+            })
+            .then(response => response.json())
+            .then(data => console.log(data.message))
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
 </html>
+
+
+styles.css
+
+body {
+    background-color: #f0f0f0;
+    color: #333;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+h1 {
+    font-size: 2rem;
+    color: #333;
+}
+
+input[type=text], button {
+    padding: 10px;
+    margin: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#countdown {
+    font-size: 2rem;
+    margin-top: 20px;
+}
+
